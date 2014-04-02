@@ -7,7 +7,7 @@ var GameLayer = cc.LayerColor.extend({
         this.maze.setPosition( cc.p( 0, 40 ) );
         this.addChild( this.maze );
 
-        this.fox = new Fox( 10*40 + 20, 6*40 + 20 );
+        this.fox = new Fox( 18*40 + 20, 1*40 + 20 );
         this.maze.addChild( this.fox );
         this.fox.scheduleUpdate();
         this.fox.setMaze( this.maze );
@@ -36,7 +36,24 @@ var GameLayer = cc.LayerColor.extend({
     },
 
     onKeyUp: function( e ) {
-        this.fox.setNextDirection( Fox.DIR.STILL );
+        switch( e ) {
+        case cc.KEY.left:
+            if( this.fox.direction == Fox.DIR.LEFT );
+            this.fox.setNextDirection( Fox.DIR.STILL );
+            break;
+        case cc.KEY.right:
+            if( this.fox.direction == Fox.DIR.RIGHT );
+            this.fox.setNextDirection( Fox.DIR.STILL );
+            break;
+        case cc.KEY.up:
+            if( this.fox.direction == Fox.DIR.UP );
+            this.fox.setNextDirection( Fox.DIR.STILL );
+            break;
+        case cc.KEY.down:
+            if( this.fox.direction == Fox.DIR.DOWN );
+            this.fox.setNextDirection( Fox.DIR.STILL );
+            break;
+        }
     },
 
     isWall: function( blockX, blockY ) {

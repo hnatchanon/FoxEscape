@@ -5,17 +5,17 @@ var Maze = cc.Node.extend({
         this.HEIGHT = 13;
         this.MAP = [
             '####################',
-            '#..................#',
-            '#..................#',
-            '#..................#',
-            '#..................#',
-            '#..................#',
-            '#..................#',
-            '#..................#',
-            '#..................#',
-            '#..................#',
-            '#..................#',
-            '#..................#',
+            '#.                 #',
+            '################## #',
+            '#.#   #            #',
+            '# # # # ########## #',
+            '# # # #      # #   #',
+            '#   # ##### ## # ###',
+            '##### # #   .      #',
+            '#     # # ###  #   #',
+            '# #####            #',
+            '# #   ########  w  #',
+            '#   #            # #',
             '####################'
         ];
 
@@ -33,6 +33,10 @@ var Maze = cc.Node.extend({
                     d.setPosition( cc.p( c * 40 + 20, (this.HEIGHT -r - 1) * 40 + 20 ) );
                     this.addChild( d );
                     this.blockes[ r ][ c ] = d;
+                } else if ( this.MAP[ r ][ c ] == 'w' ) {
+                    var o = new Obstacle();
+                    o.setPosition( cc.p( c * 40 + 20, (this.HEIGHT -r - 1) * 40 + 20 ) );
+                    this.addChild( o );
                 }
             }
         }
@@ -49,7 +53,7 @@ var Maze = cc.Node.extend({
     getDot: function( blockX, blockY ) {
         var r = this.HEIGHT - blockY - 1;
         var c = blockX;
-        console.log(this.blockes);
+        //console.log(this.blockes);
         return this.blockes[ r ][ c ];
     },
 

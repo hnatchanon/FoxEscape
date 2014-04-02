@@ -3,6 +3,7 @@ var g_resources = [
     {src: 'images/wall.png' },
     {src: 'images/fox.png' },
     {src: 'images/dot.png' },
+    {src: 'images/obs.png' },
  
     //plist
  
