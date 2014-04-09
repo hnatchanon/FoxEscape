@@ -14,7 +14,7 @@ var Maze = cc.Node.extend({
             '##### # #   .      #',
             '#     # # ###  #   #',
             '# #####            #',
-            '# #   ########  w  #',
+            '# #   ########  @  #',
             '#   #            # #',
             '####################'
         ];
@@ -33,9 +33,13 @@ var Maze = cc.Node.extend({
                     d.setPosition( cc.p( c * 40 + 20, (this.HEIGHT -r - 1) * 40 + 20 ) );
                     this.addChild( d );
                     this.blockes[ r ][ c ] = d;
-                } else if ( this.MAP[ r ][ c ] == 'w' ) {
-                    var o = new Obstacle();
-                    o.setPosition( cc.p( c * 40 + 20, (this.HEIGHT -r - 1) * 40 + 20 ) );
+                } else if ( this.MAP[ r ][ c ] == '@' ) {
+                    var x = c * 40 + 20;
+                    var y = (this.HEIGHT -r - 1) * 40 + 20;
+                    var o = new Obstacle( x, y );
+                    //o.setPosition( cc.p( x, y ) );
+                    o.setRadianX(2*40);
+                    o.scheduleUpdate();
                     this.addChild( o );
                 }
             }
