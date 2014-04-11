@@ -26,16 +26,23 @@ var Obstacle = cc.Sprite.extend({
     },
 
     update: function() {
-    	if( this.x > this.centerX + this.radianX )
-        	this.direction = Obstacle.DIR.LEFT;
-        if( this.x < this.centerX - this.radianX )
-        	this.direction = Obstacle.DIR.RIGHT;
-        if( this.y > this.centerY + this.radianY )
-        	this.direction = Obstacle.DIR.DOWN;
-        if( this.y < this.centerY - this.radianY )
-        	this.direction = Obstacle.DIR.UP;
+        this.turnAround();
+        this.autoMove();
+    },
 
-        switch ( this.direction ) {
+    turnAround: function() {
+        if( this.x > this.centerX + this.radianX )
+            this.direction = Obstacle.DIR.LEFT;
+        if( this.x < this.centerX - this.radianX )
+            this.direction = Obstacle.DIR.RIGHT;
+        if( this.y > this.centerY + this.radianY )
+            this.direction = Obstacle.DIR.DOWN;
+        if( this.y < this.centerY - this.radianY )
+            this.direction = Obstacle.DIR.UP;
+    },
+
+    autoMove: function() {
+       switch ( this.direction ) {
         case Obstacle.DIR.UP:
             this.y += Obstacle.MOVE_STEP;
             break;
@@ -49,9 +56,7 @@ var Obstacle = cc.Sprite.extend({
             this.x += Obstacle.MOVE_STEP;
             break;
         }
-
         this.updatePosition();
-
     },
 
     updatePosition: function() {

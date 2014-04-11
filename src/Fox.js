@@ -28,6 +28,7 @@ var Fox = cc.Sprite.extend({
             }
             this.direction = this.nextDirection;
         }
+        
         switch ( this.direction ) {
         case Fox.DIR.UP:
             this.y += Fox.MOVE_STEP;
@@ -53,10 +54,10 @@ var Fox = cc.Sprite.extend({
         if ( dir == Fox.DIR.STILL ) {
             return true;
         }
-        //console.log((this.x - 20) / 40);
+        
         var nextBlockX = ((this.x - 20) / 40) + (( this.nextDirection == Fox.DIR.LEFT )? (-1): ( this.nextDirection == Fox.DIR.RIGHT )? 1:0);
         var nextBlockY = ((this.y - 20) / 40) + (( this.nextDirection == Fox.DIR.UP )? (1): ( this.nextDirection == Fox.DIR.DOWN )? -1:0);
-        //console.log(nextBlockX);
+       
         return ! this.maze.isWall( nextBlockX, nextBlockY );
     },
 
@@ -69,12 +70,12 @@ var Fox = cc.Sprite.extend({
     },
 
     checkDot: function() {
-        // ... from this.x and this.y do something to get blockX and blockY
+       
         var blockX = ((this.x - 20) / 40);
         var blockY = ((this.y - 20) / 40);
         var dot = this.maze.getDot( blockX, blockY );
         if ( dot ) {
-            // ... do something..  currently we might do nothing, but our scoring code would appear here.
+           
             this.maze.removeDot( blockX, blockY, dot );           
         }
     },
