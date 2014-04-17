@@ -6,7 +6,7 @@ var Maze = cc.Node.extend({
         this.MAP = [
             '####################',
             '#.                 #',
-            '################## #',
+            '#########*######## #',
             '#.#   #            #',
             '# # # # ########## #',
             '# # # #      # #   #',
@@ -33,6 +33,9 @@ var Maze = cc.Node.extend({
                 }
                 else if ( this.MAP[ r ][ c ] == '@' ) {
                     this.createObstacle( r, c );
+                }
+                else if ( this.MAP[ r ][ c ] == '*') {
+                    this.createGoal( r, c );
                 }
             }
         }
@@ -62,6 +65,13 @@ var Maze = cc.Node.extend({
         o.scheduleUpdate();
         this.obstacles.push( o );
         this.addChild( o );
+    },
+
+    createGoal: function( r, c ) {
+        var g = new Goal();
+        g.setPosition( cc.p( c * 40 + 20, (this.HEIGHT -r - 1) * 40 + 20 ) );
+        this.addChild( g );
+        //this.blockes[ r ][ c ] = g;
     },
 
     isWall: function( blockX, blockY ) {

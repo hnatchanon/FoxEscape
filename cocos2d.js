@@ -15,6 +15,7 @@
             'src/coldetect.js',
             'src/Obstacle.js',
             'src/Fox.js',
+            'src/Goal.js',
             'src/Dot.js',
             'src/Maze.js',
             'src/GameLayer.js',
