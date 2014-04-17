@@ -79,6 +79,17 @@ var Fox = cc.Sprite.extend({
             this.maze.removeDot( blockX, blockY, dot );           
         }
     },
+
+    checkObstacle: function() {
+       
+        var blockX = ((this.x - 20) / 40);
+        var blockY = ((this.y - 20) / 40);
+        var dot = this.maze.getDot( blockX, blockY );
+        if ( dot ) {
+           
+            this.maze.removeDot( blockX, blockY, dot );           
+        }
+    },
 });
 
 Fox.MOVE_STEP = 5;

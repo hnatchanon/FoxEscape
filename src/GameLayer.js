@@ -13,7 +13,7 @@ var GameLayer = cc.LayerColor.extend({
         this.fox.setMaze( this.maze );
 
         this.setKeyboardEnabled( true );
-        
+        this.scheduleUpdate();
         return true;
     },
 
@@ -60,6 +60,18 @@ var GameLayer = cc.LayerColor.extend({
         var r = this.HEIGHT - blockY - 1;
         var c = blockX;
         return this.MAP[ r ][ c ] == '#';
+    },
+
+    update: function() {
+        
+        var obstacles = this.maze.getObstacles();
+        for(var i=0; i<obstacles.length; i++) {
+            if( obstacles[i].hit( this.fox ) )
+            {
+                console.log("aaa");
+            }
+            
+        }
     },
 });
 

@@ -19,6 +19,8 @@ var Maze = cc.Node.extend({
             '####################'
         ];
 
+        this.obstacles = [];
+
         this.blockes = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
  
         for ( var r = 0; r < this.HEIGHT; r++ ) {
@@ -58,6 +60,7 @@ var Maze = cc.Node.extend({
         var o = new Obstacle( x, y );
         o.setRadianX(2*40);
         o.scheduleUpdate();
+        this.obstacles.push( o );
         this.addChild( o );
     },
 
@@ -72,6 +75,10 @@ var Maze = cc.Node.extend({
         var c = blockX;
         //console.log(this.blockes);
         return this.blockes[ r ][ c ];
+    },
+
+    getObstacles: function() {
+        return this.obstacles;
     },
 
     removeDot: function( blockX, blockY, dot ) {
