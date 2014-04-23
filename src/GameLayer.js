@@ -7,7 +7,7 @@ var GameLayer = cc.LayerColor.extend({
         this.maze.setPosition( cc.p( 0, 40 ) );
         this.addChild( this.maze );
 
-        this.fox = new Fox( 18*40 + 20, 1*40 + 20 );
+        this.fox = new Fox( 18*40 + 20, 1*40 + 20 , this);
         this.maze.addChild( this.fox );
         this.fox.scheduleUpdate();
         this.fox.setMaze( this.maze );
@@ -15,6 +15,7 @@ var GameLayer = cc.LayerColor.extend({
         this.setKeyboardEnabled( true );
         this.scheduleUpdate();
         this.status = GameLayer.STATUS.START;
+        this.count = 0;
         return true;
     },
 
@@ -70,12 +71,45 @@ var GameLayer = cc.LayerColor.extend({
     update: function() {
         
         var obstacles = this.maze.getObstacles();
-        for(var i=0; i<obstacles.length; i++) {
-            if( obstacles[i].hit( this.fox ) )
-            {
-                this.status = GameLayer.STATUS.END;
+        if( this.status != GameLayer.STATUS.END )
+        {
+            for(var i=0; i<obstacles.length; i++) {
+                if( obstacles[i].hit( this.fox ) )
+                {
+                    this.status = GameLayer.STATUS.END;
+
+                    this.label1 = cc.LabelTTF.create( 'GAMEOVER', 'Arial', 120 );
+                    this.label1.setPosition( new cc.Point( screenWidth/2, screenHeight/2 ) );
+                    this.addChild( this.label1 );
+
+                    this.label2 = cc.LabelTTF.create( 'Press any key to retry', 'Arial', 60 );
+                    this.label2.setPosition( new cc.Point( screenWidth/2, screenHeight/2 - 120 ) );
+                    this.addChild( this.label2 );
+                }
             }
-            
+        }
+
+        var goal = this.maze.goal;
+        if( goal.hit( this.fox) && this.count==3 )
+        {
+            this.label1 = cc.LabelTTF.create( 'YOU WIN', 'Arial', 120 );
+            this.label1.setPosition( new cc.Point( screenWidth/2, screenHeight/2 ) );
+            this.addChild( this.label1 );
+
+            this.label2 = cc.LabelTTF.create( 'Press any key to continue', 'Arial', 60 );
+            this.label2.setPosition( new cc.Point( screenWidth/2, screenHeight/2 - 120 ) );
+            this.addChild( this.label2 );
+        }
+
+        var dots = this.maze.getDots();
+        for(var i=0; i<dots.length; i++)
+        {
+            if( dots[i].hit( this.fox ) )
+            {
+                console.log('hitdot');
+                dots[i].remove();
+                this.count++;
+            }
         }
     },
 });

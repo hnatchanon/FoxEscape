@@ -67,7 +67,7 @@ var Obstacle = cc.Sprite.extend({
         var objPos = obj.getPosition();
         var myPos = this.getPosition();
  
-        return checkCollision( objPos.x, objPos.y, myPos.x, myPos.y );
+        return checkCollision( objPos.x, objPos.y, myPos.x, myPos.y, 10 );
     },
 });
 

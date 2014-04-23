@@ -1,10 +1,11 @@
 var Fox = cc.Sprite.extend({
-    ctor: function( x, y ) {
+    ctor: function( x, y, gameLayer) {
         this._super();
         this.initWithFile( 'images/Fox.png' );
  
         this.x = x;
         this.y = y;
+        this.gameLayer = gameLayer;
         this.maze = null;
         this.nextDirection = Fox.DIR.STILL;
         this.direction = Fox.DIR.STILL;
@@ -22,7 +23,6 @@ var Fox = cc.Sprite.extend({
     update: function( dt ) {
         
         if ( this.isAtCenter() ) {
-            this.checkDot();
             if ( ! this.isPossibleToMove( this.nextDirection ) ) {
                 this.nextDirection = Fox.DIR.STILL;
             }
@@ -67,28 +67,6 @@ var Fox = cc.Sprite.extend({
 
     setMaze: function( maze ) {
         this.maze = maze;
-    },
-
-    checkDot: function() {
-       
-        var blockX = ((this.x - 20) / 40);
-        var blockY = ((this.y - 20) / 40);
-        var dot = this.maze.getDot( blockX, blockY );
-        if ( dot ) {
-           
-            this.maze.removeDot( blockX, blockY, dot );           
-        }
-    },
-
-    checkObstacle: function() {
-       
-        var blockX = ((this.x - 20) / 40);
-        var blockY = ((this.y - 20) / 40);
-        var dot = this.maze.getDot( blockX, blockY );
-        if ( dot ) {
-           
-            this.maze.removeDot( blockX, blockY, dot );           
-        }
     },
 });
 

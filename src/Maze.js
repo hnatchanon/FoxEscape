@@ -20,8 +20,8 @@ var Maze = cc.Node.extend({
         ];
 
         this.obstacles = [];
-
-        this.blockes = [[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
+        this.goal = null;
+        this.dots = [];
  
         for ( var r = 0; r < this.HEIGHT; r++ ) {
             for ( var c = 0; c < this.WIDTH; c++ ) {
@@ -51,10 +51,10 @@ var Maze = cc.Node.extend({
     },
 
     createDot: function( r, c ) {
-        var d = new Dot();
+        var d = new Dot( this );
         d.setPosition( cc.p( c * 40 + 20, (this.HEIGHT -r - 1) * 40 + 20 ) );
         this.addChild( d );
-        this.blockes[ r ][ c ] = d;
+        this.dots.push( d );
     },
 
     createObstacle: function( r, c ) {
@@ -71,7 +71,7 @@ var Maze = cc.Node.extend({
         var g = new Goal();
         g.setPosition( cc.p( c * 40 + 20, (this.HEIGHT -r - 1) * 40 + 20 ) );
         this.addChild( g );
-        //this.blockes[ r ][ c ] = g;
+        this.goal = g;
     },
 
     isWall: function( blockX, blockY ) {
@@ -80,18 +80,15 @@ var Maze = cc.Node.extend({
         return this.MAP[ r ][ c ] == '#';
     },
 
-    getDot: function( blockX, blockY ) {
-        var r = this.HEIGHT - blockY - 1;
-        var c = blockX;
-        //console.log(this.blockes);
-        return this.blockes[ r ][ c ];
+    getDots: function() {
+        return this.dots;
     },
 
     getObstacles: function() {
         return this.obstacles;
     },
 
-    removeDot: function( blockX, blockY, dot ) {
-        this.removeChild(dot);
-    },
+    removeDot: function( dot ) {
+        dots.remove( dot );
+    }
 });
