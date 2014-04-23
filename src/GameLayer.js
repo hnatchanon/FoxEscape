@@ -70,9 +70,10 @@ var GameLayer = cc.LayerColor.extend({
 
     update: function() {
         
-        var obstacles = this.maze.getObstacles();
+        
         if( this.status != GameLayer.STATUS.END )
         {
+            var obstacles = this.maze.getObstacles();
             for(var i=0; i<obstacles.length; i++) {
                 if( obstacles[i].hit( this.fox ) )
                 {
@@ -87,30 +88,33 @@ var GameLayer = cc.LayerColor.extend({
                     this.addChild( this.label2 );
                 }
             }
-        }
-
-        var goal = this.maze.goal;
-        if( goal.hit( this.fox) && this.count==3 )
-        {
-            this.label1 = cc.LabelTTF.create( 'YOU WIN', 'Arial', 120 );
-            this.label1.setPosition( new cc.Point( screenWidth/2, screenHeight/2 ) );
-            this.addChild( this.label1 );
-
-            this.label2 = cc.LabelTTF.create( 'Press any key to continue', 'Arial', 60 );
-            this.label2.setPosition( new cc.Point( screenWidth/2, screenHeight/2 - 120 ) );
-            this.addChild( this.label2 );
-        }
-
-        var dots = this.maze.getDots();
-        for(var i=0; i<dots.length; i++)
-        {
-            if( dots[i].hit( this.fox ) )
+            
+            var dots = this.maze.getDots();
+            for(var i=0; i<dots.length; i++)
             {
-                console.log('hitdot');
-                dots[i].remove();
-                this.count++;
+                if( dots[i].hit( this.fox ) )
+                {
+                    dots[i].remove();
+                    this.count++;
+                }
+            }
+
+            var goal = this.maze.goal;
+            if( goal.hit( this.fox) && this.count==3 )
+            {
+                this.label1 = cc.LabelTTF.create( 'YOU WIN', 'Arial', 120 );
+                this.label1.setPosition( new cc.Point( screenWidth/2, screenHeight/2 ) );
+                this.addChild( this.label1 );
+
+                this.label2 = cc.LabelTTF.create( 'Press any key to continue', 'Arial', 60 );
+                this.label2.setPosition( new cc.Point( screenWidth/2, screenHeight/2 - 120 ) );
+                this.addChild( this.label2 );
+                this.status = GameLayer.STATUS.END;
             }
         }
+        
+
+
     },
 });
 
