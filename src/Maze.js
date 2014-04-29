@@ -13,8 +13,8 @@ var Maze = cc.Node.extend({
             '#   # ##### ## # ###',
             '##### # #   .      #',
             '#     # # ###  #   #',
-            '# #####            #',
-            '# #   ########  @  #',
+            '# #####         |  #',
+            '# #   ########  -  #',
             '#   #            # #',
             '####################'
         ];
@@ -31,8 +31,11 @@ var Maze = cc.Node.extend({
                 else if ( this.MAP[ r ][ c ] == '.' ) {
                     this.createDot( r, c );
                 }
-                else if ( this.MAP[ r ][ c ] == '@' ) {
-                    this.createObstacle( r, c );
+                else if ( this.MAP[ r ][ c ] == '|' ) {
+                    this.createObstacle( r, c, Obstacle.DIR.UP );
+                }
+                else if ( this.MAP[ r ][ c ] == '-' ) {
+                    this.createObstacle( r, c, Obstacle.DIR.RIGHT );
                 }
                 else if ( this.MAP[ r ][ c ] == '*') {
                     this.createGoal( r, c );
@@ -57,11 +60,11 @@ var Maze = cc.Node.extend({
         this.dots.push( d );
     },
 
-    createObstacle: function( r, c ) {
+    createObstacle: function( r, c, dir ) {
         var x = c * 40 + 20;
         var y = (this.HEIGHT -r - 1) * 40 + 20;
-        var o = new Obstacle( x, y );
-        o.setRadianX(2*40);
+        var o = new Obstacle( x, y, dir );
+        o.setRadian(2*40);
         o.scheduleUpdate();
         this.obstacles.push( o );
         this.addChild( o );

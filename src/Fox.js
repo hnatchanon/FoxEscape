@@ -2,7 +2,7 @@ var Fox = cc.Sprite.extend({
     ctor: function( x, y, gameLayer) {
         this._super();
         this.initWithFile( 'images/Fox.png' );
- 
+    
         this.x = x;
         this.y = y;
         this.gameLayer = gameLayer;

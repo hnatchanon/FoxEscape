@@ -1,15 +1,14 @@
 var Obstacle = cc.Sprite.extend({
-    ctor: function( x, y ) {
+    ctor: function( x, y, dir ) {
         this._super();
         this.initWithFile( 'images/Obs.png' );
 
         this.centerX = x;
         this.centerY = y;
-        this.radianX = 0;
-        this.radianY = 0;
+        this.radian = 0;
         this.x = x;
         this.y = y;
-        this.direction = Obstacle.DIR.RIGHT;
+        this.direction = dir;
         this.updatePosition();
     },
 
@@ -17,12 +16,8 @@ var Obstacle = cc.Sprite.extend({
         this.direction = dir;
     },
 
-    setRadianX: function( r ) {
-    	this.radianX = r;
-    },
-
-    setRadianY: function( r ) {
-    	this.radianY = r;
+    setRadian: function( r ) {
+    	this.radian = r;
     },
 
     update: function() {
@@ -31,13 +26,13 @@ var Obstacle = cc.Sprite.extend({
     },
 
     turnAround: function() {
-        if( this.x > this.centerX + this.radianX )
+        if( this.x > this.centerX + this.radian )
             this.direction = Obstacle.DIR.LEFT;
-        if( this.x < this.centerX - this.radianX )
+        if( this.x < this.centerX - this.radian )
             this.direction = Obstacle.DIR.RIGHT;
-        if( this.y > this.centerY + this.radianY )
+        if( this.y > this.centerY + this.radian )
             this.direction = Obstacle.DIR.DOWN;
-        if( this.y < this.centerY - this.radianY )
+        if( this.y < this.centerY - this.radian )
             this.direction = Obstacle.DIR.UP;
     },
 
