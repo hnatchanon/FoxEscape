@@ -12,6 +12,7 @@
         engineDir: '../../cocos2d/',
         //SingleEngineFile:'',
         appFiles:[
+            'src/Trap.js',
             'src/coldetect.js',
             'src/Obstacle.js',
             'src/Fox.js',

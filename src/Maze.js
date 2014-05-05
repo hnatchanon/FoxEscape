@@ -5,23 +5,24 @@ var Maze = cc.Node.extend({
         this.HEIGHT = 13;
         this.MAP = [
             '####################',
-            '#.                 #',
-            '#########*######## #',
-            '#.#   #            #',
-            '# # # # ########## #',
-            '# # # #      # #   #',
-            '#   # ##### ## # ###',
-            '##### # #   .      #',
-            '#     # # ###  #   #',
-            '# #####         |  #',
-            '# #   ########  -  #',
-            '#   #            # #',
+            '#*       #   #   #.#',
+            '#        # # #+#+#+#',
+            '#++++++++# #   #   #',
+            '# # # # ## #########',
+            '#    -             #',
+            '#+#######++#######+#',
+            '#                  #',
+            '#.################.#',
+            '#  |     ||     |  #',
+            '#+################+#',
+            '#                  #',
             '####################'
         ];
 
         this.obstacles = [];
         this.goal = null;
         this.dots = [];
+        //this.traps = [];
  
         for ( var r = 0; r < this.HEIGHT; r++ ) {
             for ( var c = 0; c < this.WIDTH; c++ ) {
@@ -39,6 +40,9 @@ var Maze = cc.Node.extend({
                 }
                 else if ( this.MAP[ r ][ c ] == '*') {
                     this.createGoal( r, c );
+                }
+                else if ( this.MAP[ r ][ c ] == '+') {
+                    this.createTrap( r, c );
                 }
             }
         }
@@ -68,6 +72,14 @@ var Maze = cc.Node.extend({
         o.scheduleUpdate();
         this.obstacles.push( o );
         this.addChild( o );
+    },
+
+    createTrap: function( r, c ) {
+        var x = c * 40 + 20;
+        var y = (this.HEIGHT -r - 1) * 40 + 20;
+        var t = new Trap( x, y, 1.5 );
+        this.obstacles.push( t );
+        this.addChild( t );
     },
 
     createGoal: function( r, c ) {

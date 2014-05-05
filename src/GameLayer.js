@@ -96,11 +96,13 @@ var GameLayer = cc.LayerColor.extend({
                 {
                     dots[i].remove();
                     this.count++;
+                    if( this.count == 3 )
+                        this.maze.goal.open();
                 }
             }
 
             var goal = this.maze.goal;
-            if( goal.hit( this.fox) && this.count==3 )
+            if( goal.hit( this.fox) )
             {
                 this.label1 = cc.LabelTTF.create( 'YOU WIN', 'Arial', 120 );
                 this.label1.setPosition( new cc.Point( screenWidth/2, screenHeight/2 ) );
