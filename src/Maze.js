@@ -15,14 +15,14 @@ var Maze = cc.Node.extend({
             '#.################.#',
             '#  |     ||     |  #',
             '#+################+#',
-            '#                  #',
+            '#     <<<<<<<<<<<< #',
             '####################'
         ];
 
         this.obstacles = [];
         this.goal = null;
         this.dots = [];
-        //this.traps = [];
+        this.slicePlaces = [];
  
         for ( var r = 0; r < this.HEIGHT; r++ ) {
             for ( var c = 0; c < this.WIDTH; c++ ) {
@@ -33,16 +33,19 @@ var Maze = cc.Node.extend({
                     this.createDot( r, c );
                 }
                 else if ( this.MAP[ r ][ c ] == '|' ) {
-                    this.createObstacle( r, c, Obstacle.DIR.UP );
+                    this.createLinearEnermy( r, c, LinearEnermy.DIR.UP );
                 }
                 else if ( this.MAP[ r ][ c ] == '-' ) {
-                    this.createObstacle( r, c, Obstacle.DIR.RIGHT );
+                    this.createLinearEnermy( r, c, LinearEnermy.DIR.RIGHT );
                 }
                 else if ( this.MAP[ r ][ c ] == '*') {
                     this.createGoal( r, c );
                 }
                 else if ( this.MAP[ r ][ c ] == '+') {
                     this.createTrap( r, c );
+                }
+                else if ( this.MAP[ r ][ c ] == '<') {
+                    this.createSlicePlace( r, c, 1 );
                 }
             }
         }
@@ -64,10 +67,10 @@ var Maze = cc.Node.extend({
         this.dots.push( d );
     },
 
-    createObstacle: function( r, c, dir ) {
+    createLinearEnermy: function( r, c, dir ) {
         var x = c * 40 + 20;
         var y = (this.HEIGHT -r - 1) * 40 + 20;
-        var o = new Obstacle( x, y, dir );
+        var o = new LinearEnermy( x, y, dir );
         o.setRadian(2*40);
         o.scheduleUpdate();
         this.obstacles.push( o );
@@ -87,6 +90,14 @@ var Maze = cc.Node.extend({
         g.setPosition( cc.p( c * 40 + 20, (this.HEIGHT -r - 1) * 40 + 20 ) );
         this.addChild( g );
         this.goal = g;
+    },
+
+    createSlicePlace: function( r, c, dir ) {
+        var x = c * 40 + 20;
+        var y = (this.HEIGHT -r - 1) * 40 + 20;
+        /*var sp = new SlicePlace( dir );
+        this.slicePlaces.push( sp );
+        this.addChild( sp );*/
     },
 
     isWall: function( blockX, blockY ) {

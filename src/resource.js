@@ -8,6 +8,8 @@ var g_resources = [
     {src: 'images/trap_2.png' },
     {src: 'images/goal_1.png' },
     {src: 'images/goal_2.png' },
+    {src: 'images/Sli.png' },
+
  
     //plist
  

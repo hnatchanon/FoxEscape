@@ -5,6 +5,7 @@ var Fox = cc.Sprite.extend({
     
         this.x = x;
         this.y = y;
+        this.status = Fox.STATUS.CONTROLLABLE;
         this.gameLayer = gameLayer;
         this.maze = null;
         this.nextDirection = Fox.DIR.STILL;
@@ -68,8 +69,16 @@ var Fox = cc.Sprite.extend({
     setMaze: function( maze ) {
         this.maze = maze;
     },
+
+    setStatus: function( status ) {
+        this.status = status;
+    },
 });
 
+Fox.STATUS = {
+    OUT_OF_CONTROL: 1,
+    CONTROLLABLE: 2
+};
 Fox.MOVE_STEP = 5;
 Fox.DIR = {
     LEFT: 1,

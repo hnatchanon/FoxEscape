@@ -1,4 +1,4 @@
-var Obstacle = cc.Sprite.extend({
+var LinearEnermy = cc.Sprite.extend({
     ctor: function( x, y, dir ) {
         this._super();
         this.initWithFile( 'images/Obs.png' );
@@ -27,28 +27,28 @@ var Obstacle = cc.Sprite.extend({
 
     turnAround: function() {
         if( this.x > this.centerX + this.radian )
-            this.direction = Obstacle.DIR.LEFT;
+            this.direction = LinearEnermy.DIR.LEFT;
         if( this.x < this.centerX - this.radian )
-            this.direction = Obstacle.DIR.RIGHT;
+            this.direction = LinearEnermy.DIR.RIGHT;
         if( this.y > this.centerY + this.radian )
-            this.direction = Obstacle.DIR.DOWN;
+            this.direction = LinearEnermy.DIR.DOWN;
         if( this.y < this.centerY - this.radian )
-            this.direction = Obstacle.DIR.UP;
+            this.direction = LinearEnermy.DIR.UP;
     },
 
     autoMove: function() {
        switch ( this.direction ) {
-        case Obstacle.DIR.UP:
-            this.y += Obstacle.MOVE_STEP;
+        case LinearEnermy.DIR.UP:
+            this.y += LinearEnermy.MOVE_STEP;
             break;
-        case Obstacle.DIR.DOWN:
-            this.y -= Obstacle.MOVE_STEP;
+        case LinearEnermy.DIR.DOWN:
+            this.y -= LinearEnermy.MOVE_STEP;
             break;
-        case Obstacle.DIR.LEFT:
-            this.x -= Obstacle.MOVE_STEP;
+        case LinearEnermy.DIR.LEFT:
+            this.x -= LinearEnermy.MOVE_STEP;
             break;
-        case Obstacle.DIR.RIGHT:
-            this.x += Obstacle.MOVE_STEP;
+        case LinearEnermy.DIR.RIGHT:
+            this.x += LinearEnermy.MOVE_STEP;
             break;
         }
         this.updatePosition();
@@ -66,8 +66,8 @@ var Obstacle = cc.Sprite.extend({
     },
 });
 
-Obstacle.MOVE_STEP = 2;
-Obstacle.DIR = {
+LinearEnermy.MOVE_STEP = 2;
+LinearEnermy.DIR = {
     LEFT: 1,
     RIGHT: 2,
     UP: 3,

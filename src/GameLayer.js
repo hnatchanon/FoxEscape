@@ -16,12 +16,13 @@ var GameLayer = cc.LayerColor.extend({
         this.scheduleUpdate();
         this.status = GameLayer.STATUS.START;
         this.count = 0;
+        this.sp = new SlicePlace(1);
         return true;
     },
 
 
     onKeyDown: function( e ) {
-        if( this.status != GameLayer.STATUS.END ) {
+        if( this.status != GameLayer.STATUS.END && this.fox.status == Fox.STATUS.CONTROLLABLE ) {
             switch( e ) {
             case cc.KEY.left:
                 this.fox.setNextDirection( Fox.DIR.LEFT );
