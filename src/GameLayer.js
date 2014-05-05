@@ -114,7 +114,28 @@ var GameLayer = cc.LayerColor.extend({
                 this.addChild( this.label2 );
                 this.status = GameLayer.STATUS.END;
             }
-        }
+
+            var SlicePlaces = this.maze.getSlicePlaces();
+            var isHitSlicePlace = false;
+            for(var i=0; i<SlicePlaces.length; i++)
+            {
+                if( SlicePlaces[i].hit( this.fox ) )
+                {
+                    isHitSlicePlace = true;
+                    
+                    this.fox.setNextDirection( SlicePlaces[i].direction );
+                }
+            }
+            if( isHitSlicePlace ) {
+                this.fox.setStatus( Fox.STATUS.OUT_OF_CONTROL );
+            }
+            else {
+                if( this.fox.status == Fox.STATUS.OUT_OF_CONTROL )
+                    this.fox.setNextDirection( Fox.DIR.STILL );
+                this.fox.setStatus( Fox.STATUS.CONTROLLABLE );
+            }
+                
+        }   
         
 
 

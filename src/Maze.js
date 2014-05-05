@@ -95,9 +95,10 @@ var Maze = cc.Node.extend({
     createSlicePlace: function( r, c, dir ) {
         var x = c * 40 + 20;
         var y = (this.HEIGHT -r - 1) * 40 + 20;
-        /*var sp = new SlicePlace( dir );
+        var sp = new SlicePlace( dir );
+        sp.setPosition( cc.p( c * 40 + 20, (this.HEIGHT -r - 1) * 40 + 20 ) );
         this.slicePlaces.push( sp );
-        this.addChild( sp );*/
+        this.addChild( sp );
     },
 
     isWall: function( blockX, blockY ) {
@@ -114,7 +115,11 @@ var Maze = cc.Node.extend({
         return this.obstacles;
     },
 
+    getSlicePlaces: function() {
+        return this.slicePlaces;
+    },
+
     removeDot: function( dot ) {
         dots.remove( dot );
-    }
+    },
 });

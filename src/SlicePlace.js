@@ -1,8 +1,15 @@
 var SlicePlace = cc.Sprite.extend({
-    ctor: function( maze ) {
-        this.maze = maze;
+    ctor: function( dir ) {
+        this.direction = dir;
         this._super();
-        this.initWithFile( 'images/dot.png' );
+        this.initWithFile( 'images/Sli.png' );
+        if( this.direction == SlicePlace.DIR.LEFT )
+            this.setRotation( 270 );
+        else if( this.direction == SlicePlace.DIR.RIGHT )
+            this.setRotation( 90 );
+        else if( this.direction == SlicePlace.DIR.DOWN )
+            this.setRotation( 180 );
+
     },
 
     hit: function( obj ) {
@@ -11,11 +18,6 @@ var SlicePlace = cc.Sprite.extend({
         
         return checkCollision( objPos.x, objPos.y, myPos.x, myPos.y, 10 );
     },
-
-    remove: function() {
-        this.maze.dots.splice( this.maze.dots.indexOf( this ), 1);
-        this.removeFromParent( true );
-    }
 });
 
 SlicePlace.DIR = {
