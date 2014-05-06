@@ -1,15 +1,9 @@
-var GameLayer = cc.LayerColor.extend({
-
-    ctor: function( level ) {
-        this._super();
-        this.level = level;
-    },
-
+var StateLayer = cc.LayerColor.extend({
     init: function() {
         this._super( new cc.Color4B( 0, 0, 0, 255 ) );
         this.setPosition( new cc.Point( 0, 0 ) );
-        console.log('level: '+this.level);
-        this.maze = new Maze( this.level );
+
+        this.maze = new Maze();
         this.maze.setPosition( cc.p( 0, 40 ) );
         this.addChild( this.maze );
 
@@ -20,7 +14,7 @@ var GameLayer = cc.LayerColor.extend({
 
         this.setKeyboardEnabled( true );
         this.scheduleUpdate();
-        this.status = GameLayer.STATUS.START;
+        this.status = StateLayer.STATUS.START;
         this.count = 0;
         this.sp = new SlicePlace(1);
         return true;
@@ -28,7 +22,7 @@ var GameLayer = cc.LayerColor.extend({
 
 
     onKeyDown: function( e ) {
-        if( this.status != GameLayer.STATUS.END && this.fox.status == Fox.STATUS.CONTROLLABLE ) {
+        if( this.status != StateLayer.STATUS.END && this.fox.status == Fox.STATUS.CONTROLLABLE ) {
             switch( e ) {
             case cc.KEY.left:
                 this.fox.setNextDirection( Fox.DIR.LEFT );
@@ -44,15 +38,10 @@ var GameLayer = cc.LayerColor.extend({
                 break;
             }
         }
-        if( this.status == GameLayer.STATUS.END )
-        {
-            var director = cc.Director.getInstance();
-            director.replaceScene(cc.TransitionFade.create( 1, new GameScene( this.level ) ) );
-        }
     },
 
     onKeyUp: function( e ) {
-        if( this.status != GameLayer.STATUS.END ) {
+        if( this.status != StateLayer.STATUS.END ) {
             switch( e ) {
             case cc.KEY.left:
                 if( this.fox.direction == Fox.DIR.LEFT );
@@ -83,13 +72,13 @@ var GameLayer = cc.LayerColor.extend({
     update: function() {
         
         
-        if( this.status != GameLayer.STATUS.END )
+        if( this.status != StateLayer.STATUS.END )
         {
             var obstacles = this.maze.getObstacles();
             for(var i=0; i<obstacles.length; i++) {
                 if( obstacles[i].hit( this.fox ) )
                 {
-                    this.status = GameLayer.STATUS.END;
+                    this.status = StateLayer.STATUS.END;
 
                     this.label1 = cc.LabelTTF.create( 'GAMEOVER', 'Arial', 120 );
                     this.label1.setPosition( new cc.Point( screenWidth/2, screenHeight/2 ) );
@@ -114,10 +103,8 @@ var GameLayer = cc.LayerColor.extend({
             }
 
             var goal = this.maze.goal;
-            if( goal.hit( this.fox) && this.status != GameLayer.STATUS.END )
+            if( goal.hit( this.fox) )
             {
-                this.status = GameLayer.STATUS.END;
-
                 this.label1 = cc.LabelTTF.create( 'YOU WIN', 'Arial', 120 );
                 this.label1.setPosition( new cc.Point( screenWidth/2, screenHeight/2 ) );
                 this.addChild( this.label1 );
@@ -125,10 +112,7 @@ var GameLayer = cc.LayerColor.extend({
                 this.label2 = cc.LabelTTF.create( 'Press any key to continue', 'Arial', 60 );
                 this.label2.setPosition( new cc.Point( screenWidth/2, screenHeight/2 - 120 ) );
                 this.addChild( this.label2 );
-
-                this.level++;
-
-                console.log('level up: '+this.level);
+                this.status = StateLayer.STATUS.END;
             }
 
             var SlicePlaces = this.maze.getSlicePlaces();
@@ -158,21 +142,15 @@ var GameLayer = cc.LayerColor.extend({
     },
 });
 
-GameLayer.STATUS = {
+StateLayer.STATUS = {
     START: 0,
-    END: 1,
-    FINISH: 2
+    END: 1
 }
 
-var GameScene = cc.Scene.extend({
-    ctor: function( level ) {
-        this._super();
-        this.level = level;
-    },
-
+var StartScene = cc.Scene.extend({
     onEnter: function() {
         this._super();
-        var layer = new GameLayer( this.level );
+        var layer = new StateLayer();
         layer.init();
         this.addChild( layer );
     }

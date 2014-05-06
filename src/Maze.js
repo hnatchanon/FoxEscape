@@ -1,51 +1,95 @@
 var Maze = cc.Node.extend({
-    ctor: function() {
+    ctor: function( level ) {
         this._super();
         this.WIDTH = 20;
         this.HEIGHT = 13;
         this.MAP = [
+            [
             '####################',
-            '#*       #   #   #.#',
-            '#        # # #+#+#+#',
-            '#++++++++# #   #   #',
-            '# # # # ## #########',
-            '#    -             #',
-            '#+#######++#######+#',
+            '#*                .#',
             '#                  #',
-            '#.################.#',
-            '#  |     ||     |  #',
-            '#+################+#',
-            '#     <<<<<<<<<<<< #',
+            '#                  #',
+            '#                  #',
+            '#                  #',
+            '#         .        #',
+            '#                  #',
+            '#                  #',
+            '#                  #',
+            '#                  #',
+            '#.                 #',
             '####################'
+            ],
+            [
+            '####################',
+            '#+<v<v<v<v<v<v<v<v.#',
+            '#*^<^<^<^<^<^<^<^<^#',
+            '########+>>>>>>>>>^#',
+            '#  -    +###########',
+            '#|     -   <<<<<+++#',
+            '#.############### +#',
+            '##################+#',
+            '## # ######### # #.#',
+            '#  -  |     |  -   #',
+            '#+################ #',
+            '#  <+< < <+< <+<   #',
+            '####################'
+            ],
+            [
+            '####################',
+            '#*             <++.#',
+            '# ################ #',
+            '# # |              #',
+            '# #-               #',
+            '# #                #',
+            '# #       .        #',
+            '# #                #',
+            '#^#               +#',
+            '#+#             -  #',
+            '#+#            |  ^#',
+            '#.            +  < #',
+            '####################'
+            ]
+            
         ];
 
         this.obstacles = [];
         this.goal = null;
         this.dots = [];
         this.slicePlaces = [];
+        this.level = level;
+        console.log(level);
  
         for ( var r = 0; r < this.HEIGHT; r++ ) {
             for ( var c = 0; c < this.WIDTH; c++ ) {
-                if ( this.MAP[ r ][ c ] == '#' ) {
+                if ( this.MAP[ this.level ][ r ][ c ] == '#' ) {
                     this.createWall( r, c );
                 } 
-                else if ( this.MAP[ r ][ c ] == '.' ) {
+                else if ( this.MAP[ this.level ][ r ][ c ] == '.' ) {
                     this.createDot( r, c );
                 }
-                else if ( this.MAP[ r ][ c ] == '|' ) {
+                else if ( this.MAP[ this.level ][ r ][ c ] == '|' ) {
                     this.createLinearEnermy( r, c, LinearEnermy.DIR.UP );
                 }
-                else if ( this.MAP[ r ][ c ] == '-' ) {
+                else if ( this.MAP[ this.level ][ r ][ c ] == '-' ) {
                     this.createLinearEnermy( r, c, LinearEnermy.DIR.RIGHT );
                 }
-                else if ( this.MAP[ r ][ c ] == '*') {
+                else if ( this.MAP[ this.level ][ r ][ c ] == '*') {
                     this.createGoal( r, c );
                 }
-                else if ( this.MAP[ r ][ c ] == '+') {
+                else if ( this.MAP[ this.level ][ r ][ c ] == '+') {
                     this.createTrap( r, c );
                 }
-                else if ( this.MAP[ r ][ c ] == '<') {
-                    this.createSlicePlace( r, c, 1 );
+                else if ( this.MAP[ this.level ][ r ][ c ] == '<') {
+                    this.createSlicePlace( r, c, SlicePlace.DIR.LEFT );
+                }
+                else if ( this.MAP[ this.level ][ r ][ c ] == '>') {
+                    this.createSlicePlace( r, c, SlicePlace.DIR.RIGHT );
+                }
+                else if ( this.MAP[ this.level ][ r ][ c ] == '^') {
+                    this.createSlicePlace( r, c, SlicePlace.DIR.UP );
+                }
+                else if ( this.MAP[ this.level ][ r ][ c ] == 'v') {
+                    this.createSlicePlace( r, c, SlicePlace.DIR.DOWN );
                 }
             }
         }
@@ -74,7 +118,7 @@ var Maze = cc.Node.extend({
         o.setRadian(2*40);
         o.scheduleUpdate();
         this.obstacles.push( o );
-        this.addChild( o );
+        this.addChild( o, 10 );
     },
 
     createTrap: function( r, c ) {
@@ -104,7 +148,7 @@ var Maze = cc.Node.extend({
     isWall: function( blockX, blockY ) {
         var r = this.HEIGHT - blockY - 1;
         var c = blockX;
-        return this.MAP[ r ][ c ] == '#';
+        return this.MAP[ this.level ][ r ][ c ] == '#';
     },
 
     getDots: function() {
