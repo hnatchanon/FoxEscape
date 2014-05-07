@@ -24,7 +24,7 @@ var LinearEnermy = cc.Sprite.extend({
     update: function() {
         this.turnAround();
         this.autoMove();
-        this.setRotation( this.rotate+=2 );
+        this.setRotation( this.rotate+=20 );
     },
 
     turnAround: function() {

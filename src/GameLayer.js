@@ -44,7 +44,7 @@ var GameLayer = cc.LayerColor.extend({
                 break;
             }
         }
-        if( this.status == GameLayer.STATUS.END )
+        if( this.status == GameLayer.STATUS.END && e == cc.KEY.space )
         {
             var director = cc.Director.getInstance();
             if( this.level < this.maze.MAP.length )
@@ -98,7 +98,7 @@ var GameLayer = cc.LayerColor.extend({
                     this.label1.setPosition( new cc.Point( screenWidth/2, screenHeight/2 ) );
                     this.addChild( this.label1 );
 
-                    this.label2 = cc.LabelTTF.create( 'Press any key to retry', 'Arial', 60 );
+                    this.label2 = cc.LabelTTF.create( 'Press spacebar to retry', 'Arial', 60 );
                     this.label2.setPosition( new cc.Point( screenWidth/2, screenHeight/2 - 120 ) );
                     this.addChild( this.label2 );
                 }
@@ -125,7 +125,7 @@ var GameLayer = cc.LayerColor.extend({
                 this.label1.setPosition( new cc.Point( screenWidth/2, screenHeight/2 ) );
                 this.addChild( this.label1 );
 
-                this.label2 = cc.LabelTTF.create( 'Press any key to continue', 'Arial', 60 );
+                this.label2 = cc.LabelTTF.create( 'Press spacebar to continue', 'Arial', 60 );
                 this.label2.setPosition( new cc.Point( screenWidth/2, screenHeight/2 - 120 ) );
                 this.addChild( this.label2 );
 
