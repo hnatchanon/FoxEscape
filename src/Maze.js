@@ -6,17 +6,17 @@ var Maze = cc.Node.extend({
         this.MAP = [
             [
             '####################',
-            '#*                .#',
+            '#*                 #',
             '#                  #',
             '#                  #',
             '#    -        -    #',
             '#                  #',
-            '#         .        #',
             '#                  #',
-            '#      |           #',
-            '#           +      #',
             '#                  #',
-            '#.                 #',
+            '#      |          .#',
+            '#           +     .#',
+            '#                 .#',
+            '#                  #',
             '####################'
             ],
             [
@@ -61,6 +61,7 @@ var Maze = cc.Node.extend({
  
         for ( var r = 0; r < this.HEIGHT; r++ ) {
             for ( var c = 0; c < this.WIDTH; c++ ) {
+                this.createFloor( r, c );
                 if ( this.MAP[ this.level ][ r ][ c ] == '#' ) {
                     this.createWall( r, c );
                 } 
@@ -95,6 +96,13 @@ var Maze = cc.Node.extend({
         }
 
         this.setAnchorPoint( cc.p( 0, 0 ) );
+    },
+
+    createFloor: function( r, c ) {
+        var s = cc.Sprite.create( 'images/floor.png' );
+        s.setAnchorPoint( cc.p( 0, 0 ) );
+        s.setPosition( cc.p( c * 40, (this.HEIGHT - r - 1) * 40 ) );
+        this.addChild( s );
     },
 
     createWall: function( r, c ) {

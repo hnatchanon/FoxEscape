@@ -49,6 +49,8 @@ var GameLayer = cc.LayerColor.extend({
             var director = cc.Director.getInstance();
             if( this.level < this.maze.MAP.length )
                 director.replaceScene(cc.TransitionFade.create( 1, new GameScene( this.level ) ) );
+            else
+                director.replaceScene(cc.TransitionFade.create( 1, new GameScene( 0 ) ) );
         }
     },
 
